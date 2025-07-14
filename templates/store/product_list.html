@@ -2,5 +2,19 @@
 {% load i18n %}
 {% block title %}{% trans "Product List" %}{% endblock %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">{% trans "Products" %}</h1>
+<h1 class="text-2xl font-bold mb-6">{% trans "Products" %}</h1>
+<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    {% for product in products %}
+    <div class="border rounded p-4 flex flex-col hover:shadow">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mb-4 h-40 w-full object-cover rounded">
+        {% endif %}
+        <h2 class="font-semibold mb-2">{{ product.name }}</h2>
+        <p class="text-lg font-bold mb-4">${{ product.price }}</p>
+        <a href="{% url 'product_detail' product.pk %}" class="mt-auto bg-blue-500 text-white rounded p-2 text-center hover:bg-blue-600">{% trans "View" %}</a>
+    </div>
+    {% empty %}
+    <p>{% trans "No products available." %}</p>
+    {% endfor %}
+</div>
 {% endblock %}

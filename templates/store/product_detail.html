@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block title %}{% trans "Product Detail" %}{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">{% trans "Product Detail" %}</h1>
+<div class="max-w-2xl mx-auto">
+    <a href="{% url 'product_list' %}" class="text-blue-500 hover:underline mb-4 inline-block">{% trans "Back" %}</a>
+    {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full mb-4 rounded">
+    {% endif %}
+    <h1 class="text-3xl font-bold mb-2">{{ product.name }}</h1>
+    <p class="text-xl font-semibold mb-4">${{ product.price }}</p>
+    <p class="mb-6">{{ product.description }}</p>
+</div>
 {% endblock %}
