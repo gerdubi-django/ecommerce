@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="{% get_current_language %}">
 <head>
@@ -5,18 +6,32 @@
     <title>{% block title %}Ecommerce{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <header class="p-4 bg-gray-100 flex justify-end">
-        <form action="/i18n/setlang/" method="post">
-            {% csrf_token %}
-            <select name="language" onchange="this.form.submit()" class="mr-2 border rounded p-1">
-                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
-            </select>
-        </form>
+<body class="flex flex-col min-h-screen">
+    <header class="bg-gray-100">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <a href="{% url 'product_list' %}" class="text-xl font-bold">E-Shop</a>
+            <div class="flex items-center space-x-4">
+                <form action="/i18n/setlang/" method="post">
+                    {% csrf_token %}
+                    <select name="language" onchange="this.form.submit()" class="border rounded p-1">
+                        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                        <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+                    </select>
+                </form>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="text-blue-500 hover:underline">{% trans "Logout" %}</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-blue-500 hover:underline">{% trans "Login" %}</a>
+                    <a href="{% url 'register' %}" class="text-blue-500 hover:underline">{% trans "Register" %}</a>
+                {% endif %}
+            </div>
+        </div>
     </header>
-    <main class="container mx-auto p-4">
+    <main class="container mx-auto p-4 flex-grow">
         {% block content %}{% endblock %}
     </main>
+    <footer class="bg-gray-100 text-center p-4">
+        <p>&copy; 2024 E-Shop</p>
+    </footer>
 </body>
 </html>
