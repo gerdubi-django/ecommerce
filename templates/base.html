@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{% get_current_language %}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Ecommerce{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="p-4 bg-gray-100 flex justify-end">
+        <form action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+            <select name="language" onchange="this.form.submit()" class="mr-2 border rounded p-1">
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+            </select>
+        </form>
+    </header>
+    <main class="container mx-auto p-4">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
