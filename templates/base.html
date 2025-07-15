@@ -12,8 +12,9 @@
         <div class="container mx-auto flex justify-between items-center p-4">
             <a href="{% url 'product_list' %}" class="text-xl font-bold">E-Shop</a>
             <div class="flex items-center space-x-4">
-                <form action="/i18n/setlang/" method="post">
+                <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
                     <select name="language" onchange="this.form.submit()" class="border rounded p-1">
                         <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
                         <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
