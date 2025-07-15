@@ -1,10 +1,10 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from .forms import StyledAuthenticationForm, StyledUserCreationForm
 
 
 def login_view(request):
-    form = AuthenticationForm(request, data=request.POST or None)
+    form = StyledAuthenticationForm(request, data=request.POST or None)
     if request.method == 'POST' and form.is_valid():
         login(request, form.get_user())
         return redirect('product_list')
@@ -12,7 +12,7 @@ def login_view(request):
 
 
 def register_view(request):
-    form = UserCreationForm(request.POST or None)
+    form = StyledUserCreationForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         user = form.save()
         login(request, user)
